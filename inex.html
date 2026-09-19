@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HIDDEN REGEDIT | RGB FILE STORAGE</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#020207;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* RGB BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    background:
+      conic-gradient(
+        from 0deg,
+        #ff004c,
+        #ff00ff,
+        #6800ff,
+        #00eaff,
+        #00ff88,
+        #ffe600,
+        #ff004c
+      );
+    filter:blur(100px);
+    opacity:.22;
+    animation:rgbRotate 12s linear infinite;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(circle at 20% 20%,rgba(255,0,80,.12),transparent 25%),
+      radial-gradient(circle at 80% 70%,rgba(0,220,255,.12),transparent 25%);
+    z-index:-1;
+}
+
+@keyframes rgbRotate{
+    to{transform:rotate(360deg)}
+}
+
+/* LOGIN */
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.loginBox{
+    width:min(420px,95vw);
+    padding:35px;
+    border-radius:25px;
+    background:rgba(5,5,15,.78);
+    backdrop-filter:blur(20px);
+    border:2px solid transparent;
+    position:relative;
+    box-shadow:
+      0 0 15px #ff0080,
+      0 0 35px #00eaff,
+      inset 0 0 30px rgba(255,0,255,.08);
+    animation:boxRGB 4s linear infinite;
+}
+
+@keyframes boxRGB{
+    0%{box-shadow:0 0 15px #ff0055,0 0 35px #00eaff}
+    33%{box-shadow:0 0 15px #00ff88,0 0 35px #7000ff}
+    66%{box-shadow:0 0 15px #00eaff,0 0 35px #ff00ff}
+    100%{box-shadow:0 0 15px #ff0055,0 0 35px #00eaff}
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-bottom:8px;
+    text-shadow:
+      0 0 8px #ff0080,
+      0 0 18px #00eaff;
+    animation:textRGB 3s linear infinite;
+}
+
+@keyframes textRGB{
+    0%{color:#ff0055}
+    25%{color:#ff00ff}
+    50%{color:#00eaff}
+    75%{color:#00ff88}
+    100%{color:#ff0055}
+}
+
+.creator{
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:30px;
+}
+
+.inputGroup{
+    margin-bottom:18px;
+}
+
+.inputGroup label{
+    display:block;
+    margin-bottom:8px;
+    color:#ddd;
+}
+
+.inputGroup input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #555;
+    outline:none;
+    background:#080811;
+    color:white;
+    font-size:15px;
+    transition:.3s;
+}
+
+.inputGroup input:focus{
+    border-color:#00eaff;
+    box-shadow:0 0 15px #00eaff;
+}
+
+.loginBtn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    background:linear-gradient(90deg,#ff0055,#7200ff,#00eaff,#00ff88);
+    background-size:300%;
+    animation:buttonRGB 4s linear infinite;
+    box-shadow:0 0 20px rgba(0,238,255,.5);
+}
+
+@keyframes buttonRGB{
+    0%{background-position:0%}
+    50%{background-position:100%}
+    100%{background-position:0%}
+}
+
+.loginBtn:hover{
+    transform:translateY(-2px) scale(1.02);
+}
+
+#error{
+    color:#ff3860;
+    text-align:center;
+    margin-top:15px;
+    min-height:18px;
+}
+
+/* APP */
+#app{
+    display:none;
+    min-height:100vh;
+    padding:20px;
+}
+
+header{
+    max-width:1200px;
+    margin:auto;
+    padding:18px 22px;
+    border-radius:20px;
+    background:rgba(5,5,15,.72);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 0 25px rgba(0,238,255,.15);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.headerTitle{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-shadow:0 0 15px #00eaff;
+}
+
+.logout{
+    padding:10px 16px;
+    border:1px solid #ff0055;
+    background:#10030a;
+    color:#ff4d8a;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.container{
+    max-width:1200px;
+    margin:25px auto;
+}
+
+/* DASHBOARD */
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    padding:20px;
+    border-radius:18px;
+    background:rgba(10,10,20,.7);
+    border:1px solid rgba(255,255,255,.12);
+    text-align:center;
+    transform-style:preserve-3d;
+    transition:.35s;
+}
+
+.stat:hover{
+    transform:perspective(700px) rotateX(5deg) rotateY(-5deg) translateY(-5px);
+    box-shadow:0 0 25px rgba(0,238,255,.25);
+}
+
+.statNumber{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:5px;
+    color:#00eaff;
+    text-shadow:0 0 10px #00eaff;
+}
+
+/* UPLOAD */
+.uploadBox{
+    border:2px dashed #00eaff;
+    border-radius:22px;
+    padding:35px 20px;
+    text-align:center;
+    background:rgba(0,220,255,.035);
+    box-shadow:inset 0 0 30px rgba(0,220,255,.04);
+    transition:.3s;
+}
+
+.uploadBox:hover{
+    border-color:#ff00ff;
+    box-shadow:
+      inset 0 0 30px rgba(255,0,255,.08),
+      0 0 25px rgba(255,0,255,.15);
+}
+
+.uploadIcon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.uploadBox h2{
+    margin-bottom:8px;
+}
+
+.uploadBox p{
+    color:#999;
+    margin-bottom:20px;
+}
+
+#fileInput{
+    display:none;
+}
+
+.chooseBtn{
+    display:inline-block;
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    background:linear-gradient(90deg,#ff0055,#7700ff,#00eaff);
+    box-shadow:0 0 18px rgba(0,238,255,.35);
+}
+
+/* FILE LIST */
+.filesHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:28px 0 15px;
+}
+
+.filesHeader h2{
+    text-shadow:0 0 10px #ff00ff;
+}
+
+.clearBtn{
+    border:1px solid #ff0055;
+    color:#ff4d8a;
+    background:#12030a;
+    padding:9px 14px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.fileGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:18px;
+}
+
+.fileCard{
+    background:rgba(8,8,18,.78);
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:20px;
+    overflow:hidden;
+    transition:.35s;
+    transform-style:preserve-3d;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+}
+
+.fileCard:hover{
+    transform:perspective(800px) rotateX(3deg) rotateY(-4deg) translateY(-6px);
+    box-shadow:
+      0 0 20px rgba(0,234,255,.25),
+      0 15px 35px rgba(0,0,0,.5);
+}
+
+.preview{
+    height:170px;
+    background:#030308;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.preview img,
+.preview video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.fileIcon{
+    font-size:65px;
+    text-shadow:0 0 20px #00eaff;
+}
+
+.fileInfo{
+    padding:15px;
+}
+
+.fileName{
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-bottom:7px;
+}
+
+.fileSize{
+    font-size:12px;
+    color:#999;
+    margin-bottom:14px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.actions button{
+    flex:1;
+    padding:9px;
+    border-radius:9px;
+    cursor:pointer;
+    border:1px solid #444;
+    color:white;
+    background:#10101b;
+}
+
+.downloadBtn:hover{
+    border-color:#00ff88;
+    color:#00ff88;
+    box-shadow:0 0 10px rgba(0,255,136,.3);
+}
+
+.deleteBtn:hover{
+    border-color:#ff0055;
+    color:#ff4d8a;
+    box-shadow:0 0 10px rgba(255,0,85,.3);
+}
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:#777;
+}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .fileGrid{
+        grid-template-columns:1fr;
+    }
+
+    .loginBox{
+        padding:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="loginPage">
+
+    <div class="loginBox">
+
+        <div class="logo">HIDDEN REGEDIT</div>
+
+        <div class="creator">
+            RGB 3D FILE STORAGE SYSTEM
+        </div>
+
+        <div class="inputGroup">
+            <label>Username</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="inputGroup">
+            <label>Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+            >
+        </div>
+
+        <button class="loginBtn" onclick="login()">
+            LOGIN
+        </button>
+
+        <div id="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- APP -->
+<section id="app">
+
+<header>
+
+    <div class="headerTitle">
+        ⚡ HIDDEN REGEDIT
+    </div>
+
+    <button class="logout" onclick="logout()">
+        LOGOUT
+    </button>
+
+</header>
+
+
+<div class="container">
+
+    <!-- DASHBOARD -->
+    <div class="dashboard">
+
+        <div class="stat">
+            <div class="statNumber" id="fileCount">0</div>
+            <div>Total Files</div>
+        </div>
+
+        <div class="stat">
+            <div class="statNumber" id="imageCount">0</div>
+            <div>Images</div>
+        </div>
+
+        <div class="stat">
+            <div class="statNumber" id="videoCount">0</div>
+            <div>Videos</div>
+        </div>
+
+    </div>
+
+
+    <!-- UPLOAD -->
+    <div class="uploadBox">
+
+        <div class="uploadIcon">📁</div>
+
+        <h2>UPLOAD FILE</h2>
+
+        <p>
+            Photos • Videos • Documents • ZIP • PDF • Others
+        </p>
+
+        <label for="fileInput" class="chooseBtn">
+            + CHOOSE FILE
+        </label>
+
+        <input
+            id="fileInput"
+            type="file"
+            multiple
+            onchange="handleFiles(this.files)"
+        >
+
+    </div>
+
+
+    <!-- FILES -->
+    <div class="filesHeader">
+
+        <h2>MY FILES</h2>
+
+        <button class="clearBtn" onclick="clearAll()">
+            CLEAR ALL
+        </button>
+
+    </div>
+
+    <div id="fileGrid" class="fileGrid"></div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =========================
+   LOGIN
+========================= */
+
+const USERNAME = "ratul123";
+const PASSWORD = "ratul123";
+
+function login(){
+
+    const user =
+        document.getElementById("username").value.trim();
+
+    const pass =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("error");
+
+    if(user === USERNAME && pass === PASSWORD){
+
+        sessionStorage.setItem("hiddenRegeditLogin","true");
+
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("app").style.display="block";
+
+        renderFiles();
+
+    }else{
+
+        error.textContent =
+            "Invalid username or password.";
+
+    }
+}
+
+function logout(){
+
+    sessionStorage.removeItem("hiddenRegeditLogin");
+
+    document.getElementById("app").style.display="none";
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("username").value="";
+    document.getElementById("password").value="";
+}
+
+
+/* ENTER KEY LOGIN */
+
+document.getElementById("password")
+.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        login();
+    }
+
+});
+
+
+/* =========================
+   FILE STORAGE
+========================= */
+
+let files = [];
+
+try{
+    files = JSON.parse(
+        localStorage.getItem("hiddenRegeditFiles") || "[]"
+    );
+}catch(e){
+    files=[];
+}
+
+
+/*
+  Browser storage is not suitable for very large files.
+  Small files are stored as Data URLs.
+*/
+
+function handleFiles(selectedFiles){
+
+    if(!selectedFiles || !selectedFiles.length){
+        return;
+    }
+
+    [...selectedFiles].forEach(file => {
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            const fileObject = {
+
+                id:
+                    Date.now() +
+                    Math.random()
+                    .toString(36)
+                    .substring(2),
+
+                name:file.name,
+
+                type:file.type || "application/octet-stream",
+
+                size:file.size,
+
+                data:e.target.result,
+
+                date:new Date().toLocaleString()
+
+            };
+
+            files.push(fileObject);
+
+            saveFiles();
+
+            renderFiles();
+
+        };
+
+        reader.onerror = function(){
+
+            alert(
+                "This file could not be stored in browser storage."
+            );
+
+        };
+
+        /*
+          Data URL allows preview and downloading.
+        */
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+function saveFiles(){
+
+    try{
+
+        localStorage.setItem(
+            "hiddenRegeditFiles",
+            JSON.stringify(files)
+        );
+
+    }catch(error){
+
+        alert(
+            "Browser storage limit reached. Large files should use a real server/cloud storage system."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   RENDER FILES
+========================= */
+
+function renderFiles(){
+
+    const grid =
+        document.getElementById("fileGrid");
+
+    grid.innerHTML="";
+
+    if(files.length === 0){
+
+        grid.innerHTML = `
+            <div class="empty">
+                <div style="font-size:50px">📂</div>
+                <h3>No files uploaded</h3>
+                <p>Upload a file to start your storage.</p>
+            </div>
+        `;
+
+        updateStats();
+
+        return;
+    }
+
+
+    files.forEach(file => {
+
+        const card =
+            document.createElement("div");
+
+        card.className="fileCard";
+
+
+        let preview = `
+            <div class="preview">
+                <div class="fileIcon">📄</div>
+            </div>
+        `;
+
+
+        /* IMAGE */
+
+        if(file.type.startsWith("image/")){
+
+            preview = `
+                <div class="preview">
+                    <img
+                        src="${file.data}"
+                        alt="${escapeHTML(file.name)}"
+                    >
+                </div>
+            `;
+
+        }
+
+
+        /* VIDEO */
+
+        else if(file.type.startsWith("video/")){
+
+            preview = `
+                <div class="preview">
+                    <video
+                        src="${file.data}"
+                        controls
+                        preload="metadata">
+                    </video>
+                </div>
+            `;
+
+        }
+
+
+        /* AUDIO */
+
+        else if(file.type.startsWith("audio/")){
+
+            preview = `
+                <div class="preview">
+                    <div style="width:90%;text-align:center">
+                        <div class="fileIcon">🎵</div>
+                        <audio
+                            src="${file.data}"
+                            controls
+                            style="width:100%">
+                        </audio>
+                    </div>
+                </div>
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            ${preview}
+
+            <div class="fileInfo">
+
+                <div
+                    class="fileName"
+                    title="${escapeHTML(file.name)}"
+                >
+                    ${escapeHTML(file.name)}
+                </div>
+
+                <div class="fileSize">
+                    ${formatSize(file.size)}
+                    • ${escapeHTML(file.date)}
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="downloadBtn"
+                        onclick="downloadFile('${file.id}')"
+                    >
+                        ⬇ Download
+                    </button>
+
+                    <button
+                        class="deleteBtn"
+                        onclick="deleteFile('${file.id}')"
+                    >
+                        🗑 Delete
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    updateStats();
+
+}
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+function downloadFile(id){
+
+    const file =
+        files.find(f => f.id === id);
+
+    if(!file) return;
+
+    const link =
+        document.createElement("a");
+
+    link.href=file.data;
+    link.download=file.name;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteFile(id){
+
+    const file =
+        files.find(f => f.id === id);
+
+    if(!file) return;
+
+    if(
+        confirm(
+            `Delete "${file.name}"?`
+        )
+    ){
+
+        files =
+            files.filter(f => f.id !== id);
+
+        saveFiles();
+
+        renderFiles();
+
+    }
+
+}
+
+
+/* =========================
+   CLEAR ALL
+========================= */
+
+function clearAll(){
+
+    if(files.length === 0){
+        return;
+    }
+
+    if(
+        confirm(
+            "Delete all stored files?"
+        )
+    ){
+
+        files=[];
+
+        localStorage.removeItem(
+            "hiddenRegeditFiles"
+        );
+
+        renderFiles();
+
+    }
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+    document.getElementById("fileCount")
+        .textContent=files.length;
+
+    document.getElementById("imageCount")
+        .textContent=
+        files.filter(
+            f => f.type.startsWith("image/")
+        ).length;
+
+    document.getElementById("videoCount")
+        .textContent=
+        files.filter(
+            f => f.type.startsWith("video/")
+        ).length;
+
+}
+
+
+/* =========================
+   FILE SIZE
+========================= */
+
+function formatSize(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const units=[
+        "Bytes",
+        "KB",
+        "MB",
+        "GB",
+        "TB"
+    ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        parseFloat(
+            (bytes /
+            Math.pow(1024,i))
+            .toFixed(2)
+        )
+        + " "
+        + units[i]
+    );
+
+}
+
+
+/* =========================
+   HTML ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   AUTO LOGIN STATE
+========================= */
+
+if(
+    sessionStorage.getItem(
+        "hiddenRegeditLogin"
+    ) === "true"
+){
+
+    document.getElementById("loginPage")
+        .style.display="none";
+
+    document.getElementById("app")
+        .style.display="block";
+
+    renderFiles();
+
+}
+
+</script>
+
+</body>
+</html>
